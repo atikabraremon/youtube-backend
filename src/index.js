@@ -1,5 +1,5 @@
 import "dotenv/config";
-import dns from "dns";
+import dns from "dns"; // best practice
 import connectDB from "./db/index.js";
 import { app } from "./app.js";
 
