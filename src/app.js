@@ -16,6 +16,11 @@ app.use(express.json({ limit: JSON_LIMIT }));
 app.use(express.urlencoded({ extended: true, limit: JSON_LIMIT }));
 app.use(express.static("public"));
 
+import userRouter from "./routes/user.route.js";
+
+// router declaration
+app.use("/api/v1/users", userRouter);
+
 
 
 
