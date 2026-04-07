@@ -10,7 +10,7 @@ const registerUser = asyncHandler(async (req, res) => {
   // check if user all ready exist: username and email.
   // check for images, check for avatar.
   // upload them to cloudinary, avatar.
-  // crate user object - create entry in db
+  // crate user object - create entry8 in db
   // remove password and refresh token filed for response.
   // check for user creation
   // return res
@@ -34,7 +34,17 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   const avatarLocalPath = req.files?.avatar[0]?.path;
-  const coverImageLocalPath = req.files?.coverImage[0]?.path;
+  // const coverImageLocalPath = req.files?.coverImage[0]?.path;
+
+  let coverImageLocalPath;
+
+  if (
+    req.files &&
+    Array.isArray(req.files.coverImage) &&
+    req.files.coverImage.length > 0
+  ) {
+    coverImageLocalPath = req.files.coverImage[0].path;
+  }
 
   if (!avatarLocalPath) {
     throw new ApiError(400, "Avatar file is required");
@@ -61,16 +71,12 @@ const registerUser = asyncHandler(async (req, res) => {
   );
 
   if (!createdUser) {
-    throw ApiError(500, "Something went wrong registering the user");
+    throw new ApiError(500, "Something went wrong registering the user");
   }
 
   return res
     .status(201)
-    .json(new ApiResponse(200, createdUser, "User Registered Successfully"));
+    .json(new ApiResponse(201, createdUser, "User Registered Successfully"));
 });
 
 export { registerUser };
-
-// return res.status(200).json({
-//     message: "ok",
-//   });
